@@ -7,10 +7,11 @@ def dsiPrint(text):
 
 # create directories
 sifDirectory = os.path.join(pipelineDirectory, 'SingularitySIFs')
-sourceDirectory = os.path.join(pipelineDirectory, 'dicom')
+sourceDirectory = os.path.join(pipelineDirectory, 'bids')
+outputDirectoryQSI = os.path.join(pipelineDirectory, 'qsiprep')
 outputDirectorySRC = os.path.join(pipelineDirectory, 'src')
 outputDirectoryFIB = os.path.join(pipelineDirectory, 'fib')
-for path in [sifDirectory, sourceDirectory, outputDirectorySRC, outputDirectoryFIB]:
+for path in [sifDirectory, sourceDirectory, outputDirectorySRC, outputDirectoryFIB, outputDirectoryQSI]:
     try:
         os.mkdir(path)
         dsiPrint(f'Created directory at: {path}!')
@@ -21,7 +22,7 @@ for path in [sifDirectory, sourceDirectory, outputDirectorySRC, outputDirectoryF
 dsiPrint(f'Pulling latest SIF files to {sifDirectory}...')
 os.chdir(sifDirectory)
 os.system('singularity pull docker://dsistudio/dsistudio:latest')
-os.system('singularity pull docker://nipreps/mriqc:latest')
+os.system('singularity pull docker://pennbbl/qsiprep:latest')
 os.chdir(pipelineDirectory)
 
 dsiPrint(f'Set-Up complete!')
