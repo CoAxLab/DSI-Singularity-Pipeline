@@ -2,23 +2,28 @@ import os
 
 pipelineDirectory = os.getcwd()
 
+def dsiPrint(text):
+    print(f'\nDSI-PIPELINE: {text}\n')
+
 # create directories
 sifDirectory = os.path.join(pipelineDirectory, 'SingularitySIFs')
-sourceDirectoryNifti = os.path.join(pipelineDirectory, 'nifti')
+sourceDirectory = os.path.join(pipelineDirectory, 'bids')
+outputDirectoryQSI = os.path.join(pipelineDirectory, 'qsiprep')
 outputDirectorySRC = os.path.join(pipelineDirectory, 'src')
 outputDirectoryFIB = os.path.join(pipelineDirectory, 'fib')
-for path in [sifDirectory, sourceDirectoryNifti, outputDirectorySRC, outputDirectoryFIB]:
+for path in [sifDirectory, sourceDirectory, outputDirectorySRC, outputDirectoryFIB, outputDirectoryQSI]:
     try:
         os.mkdir(path)
-        print(f'\nCreated directory at: {path}!')
+        dsiPrint(f'Created directory at: {path}!')
     except FileExistsError:
-        print(f'\nFile path: {path} already exists!')
+        dsiPrint(f'File path: {path} already exists!')
 
 # pull SIF file for dsi studio
+dsiPrint(f'Pulling latest SIF files to {sifDirectory}...')
 os.chdir(sifDirectory)
 os.system('singularity pull docker://dsistudio/dsistudio:latest')
-os.system('singularity pull docker://nipreps/mriqc:latest')
+os.system('singularity pull docker://pennbbl/qsiprep:latest')
 os.chdir(pipelineDirectory)
 
-print(f'\n\nSet-Up complete!')
-print(f'\nPlease move participant data directories to:\n     {sourceDirectoryNifti}')
+dsiPrint(f'Set-Up complete!')
+dsiPrint(f'Please move participant data directories to:\n\t\t{sourceDirectory}')
