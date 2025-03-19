@@ -21,8 +21,8 @@ for path in [sifDirectory, outputDirectorySRC, outputDirectoryFIB, outputDirecto
 # pull SIF file for dsi studio
 dsiPrint(f'Pulling latest SIF files to {sifDirectory}...')
 os.chdir(sifDirectory)
-os.system('singularity pull docker://dsistudio/dsistudio:latest')
-os.system('singularity pull docker://pennbbl/qsiprep:latest')
+os.system('docker pull dsistudio/dsistudio:latest')
+os.system('docker pull pennlinc/qsiprep:latest')
 os.chdir(pipelineDirectory)
 
 dsiPrint(f'Set-Up complete!')
