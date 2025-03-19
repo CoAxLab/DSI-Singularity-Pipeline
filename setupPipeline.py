@@ -11,7 +11,7 @@ sourceDirectory = os.path.join(pipelineDirectory, 'bids')
 outputDirectoryQSI = os.path.join(pipelineDirectory, 'qsiprep')
 outputDirectorySRC = os.path.join(pipelineDirectory, 'src')
 outputDirectoryFIB = os.path.join(pipelineDirectory, 'fib')
-for path in [sifDirectory, outputDirectorySRC, outputDirectoryFIB, outputDirectoryQSI]:
+for path in [sourceDirectory, sifDirectory, outputDirectorySRC, outputDirectoryFIB, outputDirectoryQSI]:
     try:
         os.mkdir(path)
         dsiPrint(f'Created directory at: {path}!')
