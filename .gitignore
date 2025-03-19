@@ -4,3 +4,5 @@ SingularitySIFs/dsistudio_latest.sif
 src
 fib
 license.txt
+bids/*
+qsiprep/*
