@@ -10,9 +10,9 @@ sifDirectory = os.path.join(pipelineDirectory, 'SingularitySIFs')
 sourceDirectory = os.path.join(pipelineDirectory, 'bids')
 outputDirectoryQSI = os.path.join(pipelineDirectory, 'qsiprep')
 fsLicense = os.path.join(pipelineDirectory, 'license.txt')
-sifFile = os.path.join(sifDirectory, 'qsiprep_1.0.0.sif')
+sifFile = os.path.join(sifDirectory, 'qsiprep_latest.sif')
 
-singularityCommandPart = f'singularity run {sifFile}'
+singularityCommandPart = f'docker run -v {sourceDirectory}:/bids -v {outputDirectoryQSI}:/output pennlinc/qsiprep:latest'
 
 def dsiPrint(text):
     print(f'\nDSI-PIPELINE: {text}\n')
@@ -20,8 +20,6 @@ def dsiPrint(text):
 ## run src on BIDS folder for each subject
 for subjID in os.listdir(sourceDirectory):
     if '.tsv' in subjID or '.json' in subjID: continue
-    # source files:
-    bidsPath = os.path.join(sourceDirectory, subjID)
     # output files:
     subjOutDir = os.path.join(outputDirectoryQSI, subjID)
     workDir = os.path.join(subjOutDir, 'work')
@@ -30,9 +28,9 @@ for subjID in os.listdir(sourceDirectory):
         os.mkdir(workDir)
     except FileExistsError:
         dsiPrint(f'QSIPrep already complete for subject: {subjID}! Attempting to continue pipeline...')
-        continue
-    options = f'--participant_label {subjID} --output-resolution 2 --unringing-method mrdegibbs --fs-license-file {fsLicense}'
-    qsiCommandPart = f'{bidsPath} {subjOutDir} -w {workDir} {options}'
+        #continue
+    options = f'--skip-bids-validation --participant-label {subjID} --output-resolution 2 --unringing-method mrdegibbs --fs-license-file {fsLicense}'
+    qsiCommandPart = f'/bids /output  participant --output-resolution 2 -w /output/work --skip-bids-validation'
 
     fullCommandQSI = f'{singularityCommandPart} {qsiCommandPart}'
     dsiPrint(f'Running QSIPrep for subject: {subjID}.....')
