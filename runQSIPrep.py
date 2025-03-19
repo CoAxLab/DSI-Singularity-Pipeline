@@ -29,8 +29,8 @@ for subjID in os.listdir(sourceDirectory):
     except FileExistsError:
         dsiPrint(f'QSIPrep already complete for subject: {subjID}! Attempting to continue pipeline...')
         #continue
-    options = f'--skip-bids-validation --participant-label {subjID} --output-resolution 2 --unringing-method mrdegibbs --fs-license-file {fsLicense}'
-    qsiCommandPart = f'/bids /output  participant --output-resolution 2 -w /output/work --skip-bids-validation'
+    options = f'--participant-label {subjID} --output-resolution 2 --unringing-method mrdegibbs --fs-license-file {fsLicense}'
+    qsiCommandPart = f'/bids /output  participant --output-resolution 2 -w /output/work --skip-bids-validation {options}'
 
     fullCommandQSI = f'{singularityCommandPart} {qsiCommandPart}'
     dsiPrint(f'Running QSIPrep for subject: {subjID}.....')
