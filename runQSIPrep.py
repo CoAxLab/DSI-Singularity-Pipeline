@@ -12,7 +12,7 @@ outputDirectoryQSI = os.path.join(pipelineDirectory, 'qsiprep')
 fsLicense = os.path.join(pipelineDirectory, 'license.txt')
 sifFile = os.path.join(sifDirectory, 'qsiprep_latest.sif')
 
-singularityCommandPart = f'docker run -v {sourceDirectory}:/bids -v {outputDirectoryQSI}:/output pennlinc/qsiprep:latest'
+singularityCommandPart = f'docker run -it --rm -v {sourceDirectory}:/bids -v {outputDirectoryQSI}:/output pennlinc/qsiprep:latest'
 
 def dsiPrint(text):
     print(f'\nDSI-PIPELINE: {text}\n')
@@ -29,7 +29,7 @@ for subjID in os.listdir(sourceDirectory):
     except FileExistsError:
         dsiPrint(f'QSIPrep already complete for subject: {subjID}! Attempting to continue pipeline...')
         #continue
-    options = f'--participant-label {subjID} --output-resolution 2 --unringing-method mrdegibbs --fs-license-file {fsLicense}'
+    options = f'--participant-label {subjID} --output-resolution 2 --unringing-method mrdegibbs --omp-nthreads 1 --nthreads 1 --mem-mb 10000 --sloppy --fs-license-file {fsLicense}'
     qsiCommandPart = f'/bids /output  participant --output-resolution 2 -w /output/work --skip-bids-validation {options}'
 
     fullCommandQSI = f'{singularityCommandPart} {qsiCommandPart}'
