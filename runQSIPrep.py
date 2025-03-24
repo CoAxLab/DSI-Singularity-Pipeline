@@ -29,7 +29,7 @@ for subjID in os.listdir(sourceDirectory):
     except FileExistsError:
         dsiPrint(f'QSIPrep already complete for subject: {subjID}! Attempting to continue pipeline...')
         #continue
-    options = f'--participant-label {subjID} --output-resolution 2 --unringing-method mrdegibbs --omp-nthreads 1 --nthreads 1 --mem-mb 10000 --sloppy -vvv --fs-license-file {fsLicense}'
+    options = f'--participant-label {subjID} --output-resolution 2 --unringing-method mrdegibbs --omp-nthreads 8 --nthreads 8 --mem-mb 16000 --sloppy -vvv --fs-license-file {fsLicense}'
     qsiCommandPart = f'/bids /output  participant --output-resolution 2 -w /output/work --skip-bids-validation {options}'
 
     fullCommandQSI = f'{singularityCommandPart} {qsiCommandPart}'
