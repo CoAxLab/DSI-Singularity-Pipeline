@@ -26,4 +26,5 @@ os.system('docker pull pennlinc/qsiprep:latest')
 os.chdir(pipelineDirectory)
 
 dsiPrint(f'Set-Up complete!')
+dsiPrint(f'Please move your Freesurfer license file to the repository as <license.txt>')
 dsiPrint(f'Please move participant data directories to:\n\t\t{sourceDirectory}')
