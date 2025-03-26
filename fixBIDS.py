@@ -6,7 +6,7 @@ pipelineDirectory = os.getcwd()
 bidsDir = os.path.join(pipelineDirectory, 'bids')
 
 def cleanSession(sessionPath):
-    # sessionPath should be full file path, ses is session dir name
+    ### sessionPath should be full file path, ses is session dir name
     for subDir in os.listdir(sessionPath):
         currDir = os.path.join(sessionPath, subDir)
         for file in os.listdir(currDir):
@@ -19,11 +19,8 @@ def cleanSession(sessionPath):
                 dsiPrint(f'did not detect changes for \n\t{sessionPath}\n')
                 continue
             newFilePath = os.path.join(currDir, newFile)
-            dsiPrint(f'mv {currFilePath} {newFilePath}')
+            #dsiPrint(f'mv {currFilePath} {newFilePath}')
             os.system(f'mv {currFilePath} {newFilePath}')
-            
-
-    pass
 
 for subject in os.listdir(bidsDir):
     if 'sub-' not in subject:
@@ -36,12 +33,12 @@ for subject in os.listdir(bidsDir):
         elif 's2' in ses or '-2' in ses:
             newName = 'ses-2'
         
-        # clean session contents
+        ### clean session contents
         cleanSession(sessionDir)
 
         if newName != ses:
             newSessionDir = os.path.join(subjectDir, newName)
-            dsiPrint(f'mv {sessionDir} {newSessionDir}')
+            #dsiPrint(f'mv {sessionDir} {newSessionDir}')
             os.system(f'mv {sessionDir} {newSessionDir}')
         else:
             dsiPrint(f'rename not needed for subject {subject}, session {ses}')
