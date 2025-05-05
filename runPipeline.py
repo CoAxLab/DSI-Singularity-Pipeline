@@ -9,7 +9,7 @@ sourceDirectory = os.path.join(pipelineDirectory, 'qsiprep')
 outputDirectorySRC = os.path.join(pipelineDirectory, 'src')
 sifFile = os.path.join(sifDirectory, 'dsistudio_latest.sif')
 
-singularityCommandPart = f'singularity exec {sifFile}'
+singularityCommandPart = f'singularity exec "{sifFile}"'
 
 def dsiPrint(text):
     print(f'\nDSI-PIPELINE: {text}\n')
@@ -30,7 +30,7 @@ for subjID in os.listdir(sourceDirectory):
         except FileExistsError:
             dsiPrint(f'src action already complete for subject: {subjID}! Attempting to continue pipeline...')
         os.mkdir(srcFilesSession)
-        srcCommandPart = f'dsi_studio --action=src --source={dwiPath} --output={srcFilesSession}'
+        srcCommandPart = f'dsi_studio --action=src --source="{dwiPath}" --output="{srcFilesSession}"'
 
         fullCommandSrc = f'{singularityCommandPart} {srcCommandPart}'
         dsiPrint(f'Running DSI Studio src action for subject: {subjID}, {dir}.....')
@@ -55,7 +55,7 @@ for subjID in os.listdir(outputDirectorySRC):
         os.mkdir(subjSesOut)
         # Optionally add settings to reconCommandPart to use settings described in the string
         settings = '--method=7 --param0=1.25 --nthreads=8 --other_output=all'
-        reconCommandPart = f'dsi_studio --action=rec --source={srcFilesForRecon} --output={subjSesOut} {settings}'
+        reconCommandPart = f'dsi_studio --action=rec --source="{srcFilesForRecon}" --output="{subjSesOut}" {settings}'
 
         fullRecCommand = f'{singularityCommandPart} {reconCommandPart}'
         dsiPrint(f'Running DSI Studio recon action for subject: {subjID}.....')
