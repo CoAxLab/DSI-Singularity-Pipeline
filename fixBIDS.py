@@ -20,7 +20,7 @@ def cleanSession(sessionPath):
                 continue
             newFilePath = os.path.join(currDir, newFile)
             #dsiPrint(f'mv {currFilePath} {newFilePath}')
-            os.system(f'mv {currFilePath} {newFilePath}')
+            os.system(f'mv "{currFilePath}" "{newFilePath}"')
 
 for subject in os.listdir(bidsDir):
     if 'sub-' not in subject:
@@ -39,6 +39,6 @@ for subject in os.listdir(bidsDir):
         if newName != ses:
             newSessionDir = os.path.join(subjectDir, newName)
             #dsiPrint(f'mv {sessionDir} {newSessionDir}')
-            os.system(f'mv {sessionDir} {newSessionDir}')
+            os.system(f'mv "{sessionDir}" "{newSessionDir}"')
         else:
             dsiPrint(f'rename not needed for subject {subject}, session {ses}')
