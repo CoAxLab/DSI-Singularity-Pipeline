@@ -16,7 +16,7 @@ def cleanSession(sessionPath):
             elif 's1_' in file:
                 newFile = file.replace('s1_', '_ses-1_')
             else:
-                dsiPrint(f'did not detect changes for \n\t{sessionPath}\n')
+                dsiPrint(f'did not detect changes for \n\t{file}\n')
                 continue
             newFilePath = os.path.join(currDir, newFile)
             #dsiPrint(f'mv {currFilePath} {newFilePath}')
