@@ -19,9 +19,9 @@ for path in [sourceDirectory, sifDirectory, outputDirectorySRC, outputDirectoryF
         dsiPrint(f'File path: {path} already exists!')
 
 # pull SIF file for dsi studio
-dsiPrint(f'Pulling latest SIF files to {sifDirectory}...')
+dsiPrint(f'Pulling latest Docker Images to {sifDirectory}...')
 os.chdir(sifDirectory)
-os.system('singularity pull docker://dsistudio/dsistudio:latest')
+#os.system('singularity pull docker://dsistudio/dsistudio:latest')
 os.system('docker pull dsistudio/dsistudio:latest')
 os.system('docker pull pennlinc/qsiprep:latest')
 os.chdir(pipelineDirectory)
